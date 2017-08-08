@@ -67,6 +67,7 @@ class Controls():
 		self.updatePopLimitDisplay(self.interface.populationLimit)
 		self.updatePopMinDisplay(self.interface.populationMin)
 		self.updateGenerationDisplay(self.interface.generation)
+		self.updateCellSizeDisplay(self.interface.grid.cellSize)
 	
 	###########################################
 	# CONTROL CREATION METHODS                #
@@ -100,7 +101,7 @@ class Controls():
 		self.addControl([ RectWithText(text = "Start", font = self.fontPath, click = lambda:self.interface.pause()) ])
 			# Step forward
 		self.addControl([ Label(text = "Step Forward", font = self.fontPath, size = 18), TriButton(click = lambda:self.interface.stepForward()) ])
-		self.addControl([ Label(text = "Generation = ", font = self.fontPath, size = 18), Label(text = "0", font = self.fontPath, size = 18) ])
+		self.addControl([ Label(text = "Generation =", font = self.fontPath, size = 18), Label(text = "0", font = self.fontPath, size = 18) ])
 			# Speed Label
 		self.addControl([ Label(text = "Speed", font = self.fontPath, size = 16) ])
 			# Speed controls and display
@@ -109,7 +110,9 @@ class Controls():
 		self.addControl([ TriButton(flip = True, click = lambda:self.interface.popLimitDown()), RectWithText(text = "3", size = Dimensions(61, 31), font = self.fontPath), TriButton(click = lambda:self.interface.popLimitUp()) ])
 		self.addControl([ Label(text = "Population Minimum", font = self.fontPath, size = 16) ])
 		self.addControl([ TriButton(flip = True, click = lambda:self.interface.popMinDown()), RectWithText(text = "2", size = Dimensions(61, 31), font = self.fontPath), TriButton(click = lambda:self.interface.popMinUp()) ])
+		self.addControl([ Label(text = "Size of squares =", font = self.fontPath, size = 12), Label(text = "19", font = self.fontPath, size = 12) ])
 		self.addControl([ RectWithText(text = "Reset", font = self.fontPath, click = lambda:self.interface.reset()) ])
+		
 			# Fill the rest of the control panel with white
 		self.addControlPadding()
 		
@@ -122,17 +125,25 @@ class Controls():
 		self.speedDisplay = self.controls[4].objects[1]
 		self.popLimitDisplay = self.controls[6].objects[1]
 		self.popMinDisplay = self.controls[8].objects[1]
+		self.cellSizeDisplay = self.controls[9].objects[1]
 		# Add wrapper attribute so they can be flagged for redrawing
 		self.simStatusDisplay.wrapper = self.controls[0]
 		self.generationDisplay.wrapper = self.controls[2]
 		self.speedDisplay.wrapper = self.controls[4]
 		self.popLimitDisplay.wrapper = self.controls[6]
 		self.popMinDisplay.wrapper = self.controls[8]
+		self.cellSizeDisplay.wrapper = self.controls[9]
 	
 	###########################################
 	# CONTROL DISPLAY UPDATE METHODS          #
 	###########################################
 	
+	def updateCellSizeDisplay(self, cellSize):
+		self.cellSizeDisplay.setText(str(cellSize[0]-2))
+		
+		# Add to list for redraw
+		self.controlsToRedraw.append(self.cellSizeDisplay.wrapper)
+		
 	def updateGenerationDisplay(self, generation):
 		self.generationDisplay.setText(str(generation))
 		

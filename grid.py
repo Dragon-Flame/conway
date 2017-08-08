@@ -16,7 +16,6 @@ class Grid(pygame.Rect):
 		super().__init__(location.left, location.top, dimensions.width, dimensions.height)
 		
 		# Create constants
-		self.cellSize = cellSize
 		self.minSize = Dimensions(5,5)
 		self.maxSize = Dimensions(100, 100)
 		

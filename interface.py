@@ -313,6 +313,7 @@ class Interface():
 		# Schedule controls and grid for redrawing #
 		############################################
 		
+		self.controls.updateCellSizeDisplay(self.grid.cellSize)
 		self.controls.redrawAll()
 		self.grid.redrawAll()
 	
